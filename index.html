@@ -28,14 +28,9 @@
       color: var(--text);
     }
 
-    body {
-      line-height: 1.6;
-    }
+    body { line-height: 1.6; }
 
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
     img {
       width: 100%;
@@ -49,20 +44,21 @@
       margin: 0 auto;
     }
 
+    /* ── 导航 ── */
     .nav {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       z-index: 1000;
-      transition: 0.35s ease;
+      transition: background 0.35s ease, border-color 0.35s ease;
       border-bottom: 1px solid transparent;
     }
 
     .nav.scrolled {
-      background: rgba(10, 12, 16, 0.88);
+      background: rgba(10, 12, 16, 0.92);
       border-bottom-color: var(--line);
-      backdrop-filter: blur(8px);
+      backdrop-filter: blur(10px);
     }
 
     .nav-inner {
@@ -78,10 +74,9 @@
       font-weight: 600;
     }
 
-    .logo span {
-      color: var(--accent);
-    }
+    .logo span { color: var(--accent); }
 
+    /* 桌面菜单 */
     .menu {
       display: flex;
       gap: 26px;
@@ -98,18 +93,62 @@
     .menu a::after {
       content: "";
       position: absolute;
-      left: 0;
-      bottom: 0;
-      width: 0;
-      height: 1px;
+      left: 0; bottom: 0;
+      width: 0; height: 1px;
       background: var(--accent);
-      transition: 0.25s ease;
+      transition: width 0.25s ease;
     }
 
-    .menu a:hover::after {
+    .menu a:hover::after { width: 100%; }
+
+    /* 汉堡按钮 */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      gap: 5px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0;
+    }
+
+    .hamburger span {
+      display: block;
       width: 100%;
+      height: 2px;
+      background: var(--text);
+      border-radius: 2px;
+      transition: transform 0.3s ease, opacity 0.3s ease;
     }
 
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* 手机端下拉菜单 */
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: rgba(10, 12, 16, 0.97);
+      border-top: 1px solid var(--line);
+      padding: 12px 0 20px;
+    }
+
+    .mobile-menu.open { display: flex; }
+
+    .mobile-menu a {
+      padding: 14px 24px;
+      font-size: 1rem;
+      color: #d9deea;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .mobile-menu a:last-child { border-bottom: none; }
+
+    /* ── Hero ── */
     .hero {
       min-height: 100vh;
       position: relative;
@@ -118,12 +157,12 @@
       text-align: center;
       padding: 120px 16px 80px;
       background:
-        linear-gradient(180deg, rgba(8, 10, 14, 0.48), rgba(8, 10, 14, 0.85)),
+        linear-gradient(180deg, rgba(8,10,14,0.48), rgba(8,10,14,0.85)),
         url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1950&q=80") center/cover no-repeat;
     }
 
     .hero h1 {
-      font-size: clamp(2.1rem, 5vw, 4.6rem);
+      font-size: clamp(2rem, 5vw, 4.6rem);
       letter-spacing: 0.16em;
       margin-bottom: 16px;
       font-weight: 650;
@@ -131,18 +170,18 @@
 
     .hero p {
       color: #d7dde7;
-      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      font-size: clamp(0.95rem, 1.8vw, 1.25rem);
       max-width: 700px;
       margin: 0 auto 34px;
     }
 
     .hero .cta {
       display: inline-block;
-      padding: 12px 24px;
+      padding: 12px 28px;
       border: 1px solid var(--accent);
       color: var(--accent);
       letter-spacing: 0.06em;
-      transition: 0.25s ease;
+      transition: background 0.25s ease, color 0.25s ease;
     }
 
     .hero .cta:hover {
@@ -150,9 +189,8 @@
       color: #13161a;
     }
 
-    section {
-      padding: 88px 0;
-    }
+    /* ── Sections ── */
+    section { padding: 88px 0; }
 
     .section-title {
       font-size: 1.7rem;
@@ -166,6 +204,7 @@
       margin-bottom: 34px;
     }
 
+    /* ── Services ── */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -184,16 +223,10 @@
       border-color: rgba(201, 169, 126, 0.55);
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      font-size: 1.1rem;
-    }
+    .card h3 { margin-bottom: 10px; font-size: 1.1rem; }
+    .card p { color: var(--muted); font-size: 0.95rem; }
 
-    .card p {
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-
+    /* ── Portfolio ── */
     .portfolio-grid {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -215,17 +248,14 @@
       transform: scale(1.05);
     }
 
-    .about-box,
-    .contact-box {
+    /* ── About / Contact ── */
+    .about-box, .contact-box {
       background: var(--panel);
       border: 1px solid var(--line);
       padding: 28px;
     }
 
-    .about-box p {
-      color: #d6dbe6;
-      max-width: 860px;
-    }
+    .about-box p { color: #d6dbe6; max-width: 860px; }
 
     .contact-list {
       list-style: none;
@@ -248,6 +278,7 @@
       padding: 24px 10px 30px;
     }
 
+    /* ── 响应式 ── */
     @media (max-width: 900px) {
       .services-grid,
       .portfolio-grid {
@@ -256,96 +287,48 @@
     }
 
     @media (max-width: 640px) {
-      .container {
-        width: min(var(--max-width), 94%);
-      }
+      /* 导航 */
+      .nav-inner { height: 60px; }
+      .menu { display: none; }
+      .hamburger { display: flex; }
 
-      .nav {
-        background: rgba(10, 12, 16, 0.9);
-        border-bottom-color: var(--line);
-        backdrop-filter: blur(8px);
-      }
-
-      .nav-inner {
-        min-height: 64px;
-        height: auto;
-        padding: 10px 0;
-        flex-direction: column;
-        justify-content: center;
-        gap: 8px;
-      }
-
-      .logo {
-        font-size: 0.9rem;
-        letter-spacing: 0.12em;
-      }
-
-      .menu {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 14px;
-        font-size: 0.86rem;
-        line-height: 1.4;
-      }
-
+      /* Hero */
       .hero {
-        min-height: 88vh;
-        padding: 136px 14px 68px;
+        padding: 100px 20px 60px;
+        min-height: 100svh;
       }
 
-      .hero h1 {
-        letter-spacing: 0.1em;
-      }
+      .hero h1 { letter-spacing: 0.08em; }
 
-      .hero p {
-        font-size: 0.96rem;
-        margin-bottom: 26px;
-      }
+      /* Sections */
+      section { padding: 60px 0; }
 
-      .hero .cta {
-        width: 100%;
-        max-width: 220px;
-        padding: 11px 18px;
-        font-size: 0.92rem;
-        text-align: center;
-      }
+      .section-title { font-size: 1.4rem; }
 
-      section {
-        padding: 72px 0;
-      }
-
-      .section-title {
-        font-size: 1.42rem;
-        margin-bottom: 18px;
-      }
-
-      .section-desc {
-        margin-bottom: 24px;
-        font-size: 0.94rem;
-      }
-
-      .card,
-      .about-box,
-      .contact-box {
-        padding: 20px 16px;
-      }
-
-      .contact-list {
-        gap: 10px;
-        font-size: 0.95rem;
-      }
-
+      /* 卡片和图集单列 */
       .services-grid,
       .portfolio-grid {
         grid-template-columns: 1fr;
       }
+
+      /* 作品图手机端改为横向比例 */
+      .portfolio-item { aspect-ratio: 3 / 2; }
+
+      /* 卡片去掉 hover 上移（手机无 hover） */
+      .card:hover { transform: none; }
+
+      /* About / Contact */
+      .about-box, .contact-box { padding: 20px 16px; }
     }
   </style>
 </head>
 <body>
+
   <header class="nav" id="topNav">
     <div class="container nav-inner">
       <a class="logo" href="#home">LUMI<span>ERE</span> STUDIO</a>
+
+      <!-- 桌面菜单 -->
       <ul class="menu">
         <li><a href="#home">首页</a></li>
         <li><a href="#services">服务</a></li>
@@ -353,7 +336,21 @@
         <li><a href="#about">关于</a></li>
         <li><a href="#contact">联系</a></li>
       </ul>
+
+      <!-- 汉堡按钮（仅手机显示） -->
+      <button class="hamburger" id="hamburger" aria-label="菜单">
+        <span></span><span></span><span></span>
+      </button>
     </div>
+
+    <!-- 手机下拉菜单 -->
+    <nav class="mobile-menu" id="mobileMenu">
+      <a href="#home" class="mobile-link">首页</a>
+      <a href="#services" class="mobile-link">服务</a>
+      <a href="#portfolio" class="mobile-link">作品</a>
+      <a href="#about" class="mobile-link">关于</a>
+      <a href="#contact" class="mobile-link">联系</a>
+    </nav>
   </header>
 
   <section class="hero" id="home">
@@ -404,10 +401,7 @@
     <div class="container">
       <h2 class="section-title">关于我们</h2>
       <div class="about-box">
-        <p>
-          LUMIERE 摄影工作室专注于人像与品牌影像创作，强调简洁构图、自然情绪与高级质感。
-          我们相信每一次拍摄都不只是记录，更是一次对故事、光线与审美的共同创作。
-        </p>
+        <p>LUMIERE 摄影工作室专注于人像与品牌影像创作，强调简洁构图、自然情绪与高级质感。我们相信每一次拍摄都不只是记录，更是一次对故事、光线与审美的共同创作。</p>
       </div>
     </div>
   </section>
@@ -430,12 +424,31 @@
   </footer>
 
   <script>
+    // 导航滚动效果
     const nav = document.getElementById("topNav");
     window.addEventListener("scroll", () => {
       nav.classList.toggle("scrolled", window.scrollY > 16);
     });
 
+    // 年份
     document.getElementById("year").textContent = new Date().getFullYear();
+
+    // 汉堡菜单
+    const hamburger = document.getElementById("hamburger");
+    const mobileMenu = document.getElementById("mobileMenu");
+
+    hamburger.addEventListener("click", () => {
+      hamburger.classList.toggle("open");
+      mobileMenu.classList.toggle("open");
+    });
+
+    // 点击菜单项后关闭
+    document.querySelectorAll(".mobile-link").forEach(link => {
+      link.addEventListener("click", () => {
+        hamburger.classList.remove("open");
+        mobileMenu.classList.remove("open");
+      });
+    });
   </script>
 </body>
 </html>
