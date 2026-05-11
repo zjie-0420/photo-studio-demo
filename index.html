@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMIERE 摄影工作室</title>
+  <style>
+    :root {
+      --bg: #0b0d11;
+      --panel: #12151b;
+      --text: #eef1f5;
+      --muted: #a9b0bd;
+      --line: rgba(255, 255, 255, 0.1);
+      --accent: #c9a97e;
+      --max-width: 1180px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      scroll-behavior: smooth;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .container {
+      width: min(var(--max-width), 92%);
+      margin: 0 auto;
+    }
+
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      transition: 0.35s ease;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav.scrolled {
+      background: rgba(10, 12, 16, 0.88);
+      border-bottom-color: var(--line);
+      backdrop-filter: blur(8px);
+    }
+
+    .nav-inner {
+      height: 74px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      letter-spacing: 0.18em;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .logo span {
+      color: var(--accent);
+    }
+
+    .menu {
+      display: flex;
+      gap: 26px;
+      list-style: none;
+      font-size: 0.95rem;
+      color: #d9deea;
+    }
+
+    .menu a {
+      position: relative;
+      padding-bottom: 4px;
+    }
+
+    .menu a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 0;
+      height: 1px;
+      background: var(--accent);
+      transition: 0.25s ease;
+    }
+
+    .menu a:hover::after {
+      width: 100%;
+    }
+
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 120px 16px 80px;
+      background:
+        linear-gradient(180deg, rgba(8, 10, 14, 0.48), rgba(8, 10, 14, 0.85)),
+        url("https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=1950&q=80") center/cover no-repeat;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.1rem, 5vw, 4.6rem);
+      letter-spacing: 0.16em;
+      margin-bottom: 16px;
+      font-weight: 650;
+    }
+
+    .hero p {
+      color: #d7dde7;
+      font-size: clamp(1rem, 1.8vw, 1.25rem);
+      max-width: 700px;
+      margin: 0 auto 34px;
+    }
+
+    .hero .cta {
+      display: inline-block;
+      padding: 12px 24px;
+      border: 1px solid var(--accent);
+      color: var(--accent);
+      letter-spacing: 0.06em;
+      transition: 0.25s ease;
+    }
+
+    .hero .cta:hover {
+      background: var(--accent);
+      color: #13161a;
+    }
+
+    section {
+      padding: 88px 0;
+    }
+
+    .section-title {
+      font-size: 1.7rem;
+      margin-bottom: 26px;
+      letter-spacing: 0.08em;
+      font-weight: 600;
+    }
+
+    .section-desc {
+      color: var(--muted);
+      margin-bottom: 34px;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: linear-gradient(180deg, #12161d, #0f1319);
+      border: 1px solid var(--line);
+      padding: 26px 22px;
+      transition: transform 0.28s ease, border-color 0.28s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      border-color: rgba(201, 169, 126, 0.55);
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      font-size: 1.1rem;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .portfolio-item {
+      aspect-ratio: 4 / 5;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #111;
+    }
+
+    .portfolio-item img {
+      transition: transform 0.45s ease;
+    }
+
+    .portfolio-item:hover img {
+      transform: scale(1.05);
+    }
+
+    .about-box,
+    .contact-box {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      padding: 28px;
+    }
+
+    .about-box p {
+      color: #d6dbe6;
+      max-width: 860px;
+    }
+
+    .contact-list {
+      list-style: none;
+      display: grid;
+      gap: 12px;
+      color: #dce2ed;
+    }
+
+    .contact-list strong {
+      color: var(--accent);
+      margin-right: 10px;
+      font-weight: 600;
+    }
+
+    footer {
+      border-top: 1px solid var(--line);
+      color: #9299a8;
+      text-align: center;
+      font-size: 0.9rem;
+      padding: 24px 10px 30px;
+    }
+
+    @media (max-width: 900px) {
+      .services-grid,
+      .portfolio-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .nav-inner {
+        height: 64px;
+      }
+
+      .menu {
+        gap: 14px;
+        font-size: 0.86rem;
+      }
+
+      section {
+        padding: 72px 0;
+      }
+
+      .services-grid,
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="nav" id="topNav">
+    <div class="container nav-inner">
+      <a class="logo" href="#home">LUMI<span>ERE</span> STUDIO</a>
+      <ul class="menu">
+        <li><a href="#home">首页</a></li>
+        <li><a href="#services">服务</a></li>
+        <li><a href="#portfolio">作品</a></li>
+        <li><a href="#about">关于</a></li>
+        <li><a href="#contact">联系</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <section class="hero" id="home">
+    <div>
+      <h1>LUMIERE STUDIO</h1>
+      <p>用光影记录每一个值得被珍藏的瞬间，让故事在镜头中拥有温度。</p>
+      <a class="cta" href="#portfolio">查看作品</a>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <h2 class="section-title">服务介绍</h2>
+      <p class="section-desc">我们提供高品质定制拍摄服务，从概念到成片，为你呈现兼具质感与情绪表达的影像作品。</p>
+      <div class="services-grid">
+        <article class="card">
+          <h3>婚纱摄影</h3>
+          <p>以电影感叙事呈现你们的爱情故事，打造独一无二的婚纱纪念作品。</p>
+        </article>
+        <article class="card">
+          <h3>写真拍摄</h3>
+          <p>通过风格化造型与场景设计，塑造专属你的个人影像气质。</p>
+        </article>
+        <article class="card">
+          <h3>商业摄影</h3>
+          <p>为品牌、人像与产品提供视觉方案，提升内容表达与商业传播力。</p>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio">
+    <div class="container">
+      <h2 class="section-title">作品集展示</h2>
+      <p class="section-desc">精选作品预览（占位图，可后续替换为你的实际拍摄内容）。</p>
+      <div class="portfolio-grid">
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1200&q=80" alt="作品图 1"></figure>
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1472653431158-6364773b2a56?auto=format&fit=crop&w=1200&q=80" alt="作品图 2"></figure>
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1452587925148-ce544e77e70d?auto=format&fit=crop&w=1200&q=80" alt="作品图 3"></figure>
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?auto=format&fit=crop&w=1200&q=80" alt="作品图 4"></figure>
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1511285560929-80b456fea0bc?auto=format&fit=crop&w=1200&q=80" alt="作品图 5"></figure>
+        <figure class="portfolio-item"><img src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80" alt="作品图 6"></figure>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container">
+      <h2 class="section-title">关于我们</h2>
+      <div class="about-box">
+        <p>
+          LUMIERE 摄影工作室专注于人像与品牌影像创作，强调简洁构图、自然情绪与高级质感。
+          我们相信每一次拍摄都不只是记录，更是一次对故事、光线与审美的共同创作。
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <div class="container">
+      <h2 class="section-title">联系方式</h2>
+      <div class="contact-box">
+        <ul class="contact-list">
+          <li><strong>电话</strong> 138-0000-0000</li>
+          <li><strong>微信</strong> LumiereStudio</li>
+          <li><strong>地址</strong> 上海市徐汇区光影路 88 号</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    © <span id="year"></span> LUMIERE STUDIO · All Rights Reserved
+  </footer>
+
+  <script>
+    const nav = document.getElementById("topNav");
+    window.addEventListener("scroll", () => {
+      nav.classList.toggle("scrolled", window.scrollY > 16);
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
